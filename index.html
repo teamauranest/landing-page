@@ -90,7 +90,7 @@
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
             <h1>Welcome to <span>Aura Nest</span></h1>
-            <p>We are team of Rangelands and Forest Advocates.</p>
+            <p>We are a team of Rangelands and Forest Advocates.</p>
             <div class="d-flex">
               <a href="#about" class="btn-get-started">Get Started</a>
               </div>
@@ -344,6 +344,44 @@
               </div>
             </form>
           </div><!-- End Contact Form -->
+
+          <?php
+
+// Recipient email
+$to = "auranest.research@hotmail.com";
+
+// Get and sanitize form inputs
+$name = htmlspecialchars($_POST['name'] ?? '');
+$email = htmlspecialchars($_POST['email'] ?? '');
+$subject = htmlspecialchars($_POST['subject'] ?? '');
+$message = htmlspecialchars($_POST['message'] ?? '');
+
+// Validate required fields
+if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+    echo "All fields are required.";
+    exit;
+}
+
+// Create email headers
+$headers = "From: $name <$email>\r\n";
+$headers .= "Reply-To: $email\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+// Full email body
+$body = "You received a new message from the contact form:\n\n";
+$body .= "Name: $name\n";
+$body .= "Email: $email\n";
+$body .= "Subject: $subject\n\n";
+$body .= "Message:\n$message\n";
+
+// Send email
+if (mail($to, $subject, $body, $headers)) {
+    echo "Your message has been sent. Thank you!";
+} else {
+    echo "There was a problem sending the message. Please try again later.";
+}
+?>
+
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
